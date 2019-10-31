@@ -1,0 +1,210 @@
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+Options -Indexes
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_value variables_order "GPCS"
+   php_flag display_errors Off
+   php_value max_execution_time 90
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 384M
+   php_value post_max_size 8M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php70"
+   php_value upload_max_filesize 5M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+#imagenes del profile
+
+#RewriteCond %{REQUEST_URI} \.(jpg|jpeg|pdf|doc|docx)$ [NC]
+RewriteRule ^imagenes/imgperfil/([a-z0-9]+)/$ %{ENV:REWRITEBASE}archivo.php?carpeta=imgperfil&param1=$1 [L]
+RewriteRule ^imagenes/usuarios/([a-z0-9]+)/$ %{ENV:REWRITEBASE}archivo.php?carpeta=profile&param1=$1 [L]
+RewriteRule ^imagenes/imgthumb/([a-z0-9]+)/$ %{ENV:REWRITEBASE}archivo.php?carpeta=profile&param1=$1&param3=thumb [L]
+RewriteRule ^hojasDeVida/([a-z0-9]+)/$ %{ENV:REWRITEBASE}archivo.php?carpeta=hv&param1=$1 [L]
+RewriteRule ^hojasDeVida/([a-z0-9]+)/([A-Za-z0-9]+)/$ %{ENV:REWRITEBASE}archivo.php?carpeta=hv&param1=$1&param2=$2 [L]
+RewriteRule ^cargarhojavida/$ %{ENV:REWRITEBASE}index.php?mostrar=cargarhojavida [L]
+RewriteRule ^subirHv/$ %{ENV:REWRITEBASE}index.php?mostrar=cargarhojavida&opcion=hvusuario [L]
+RewriteRule ^hvcargado/$ %{ENV:REWRITEBASE}index.php?mostrar=cargarhojavida&opcion=hvcargado [L]
+
+#login
+RewriteRule ^login/?$ %{ENV:REWRITEBASE}index.php?mostrar=login [L]
+
+#contrasena
+RewriteRule ^contrasena/$ %{ENV:REWRITEBASE}index.php?mostrar=contrasena [L]
+RewriteRule ^contrasena/([^.]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=contrasena&opcion=recuperacion&token=$1 [L]
+RewriteRule ^cambioClave/$ %{ENV:REWRITEBASE}index.php?mostrar=contrasena&opcion=cambioContrasena [L]
+
+#registro
+RewriteRule ^registro/$ %{ENV:REWRITEBASE}index.php?mostrar=registro [L]
+RewriteRule ^registro/empresa/$ %{ENV:REWRITEBASE}index.php?mostrar=registro&opcion=empresa [L]
+RewriteRule ^registroUsuario/$ %{ENV:REWRITEBASE}index.php?mostrar=registro&opcion=procesoGuardar [L]
+RewriteRule ^registro/([^.]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=registro&opcion=activacion&token=$1 [L]
+
+#perfil
+RewriteRule ^perfil/$ %{ENV:REWRITEBASE}index.php?mostrar=perfil [L]
+RewriteRule ^createchart/$ %{ENV:REWRITEBASE}index.php?mostrar=perfil&opcion=createchart [L]
+
+#logout
+RewriteRule ^logout/$ %{ENV:REWRITEBASE}index.php?mostrar=logout [L]
+
+#cuestionarios
+RewriteRule ^cuestionario/$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionario [L]
+RewriteRule ^modalidad/$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionario&opcion=modalidad [L]
+RewriteRule ^preguntas/$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionario&opcion=preguntas [L]
+RewriteRule ^cuestionario/guardarResp/$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionario&opcion=guardarResp [L]
+
+#####################################################################################
+
+#velocimetro
+RewriteRule ^velocimetro/$ %{ENV:REWRITEBASE}index.php?mostrar=velocimetro [L]
+
+######################################################################################
+
+#publicar
+RewriteRule ^publicar/$ %{ENV:REWRITEBASE}index.php?mostrar=publicar [L]
+
+######################################################################################
+
+#planes
+RewriteRule ^compraplan/exito/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=resultado&mensaje=exito [L]
+RewriteRule ^compraplan/error/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=resultado&mensaje=error [L]
+RewriteRule ^compraplan/deposito/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=deposito [L]
+RewriteRule ^compraplan/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=compra&idplan=$1 [L]
+RewriteRule ^planes/$ %{ENV:REWRITEBASE}index.php?mostrar=plan [L]
+RewriteRule ^planesUsuario/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=planes_usuario [L]
+RewriteRule ^planesUsuario/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=plan&opcion=planes_usuario&desactivarPlan=$1 [L]
+
+######################################################################################
+
+#ofertas
+RewriteRule ^oferta/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=oferta [L]
+RewriteRule ^oferta/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=oferta&page=$1 [L]
+RewriteRule ^convertir/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=convertirOferta [L]
+RewriteRule ^detalleOferta/([a-z]+)/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=detalleOferta&vista=$1&id=$2 [L]
+RewriteRule ^ofertaDetallada/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=ofertaDetallada&id=$1 [L]
+
+######################################################################################
+
+#postulaciones
+RewriteRule ^postulacion/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=postulacion [L]
+RewriteRule ^postulacion/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=postulacion&page=$1 [L]
+RewriteRule ^postulacion/([a-z])+/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=postulacion&param=$1&eliminarPostulacion=$2 [L]
+RewriteRule ^postulacion/([a-z])+/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&vista=postulacion&param=$1&eliminarPostulacion=$2&empresa=$3 [L]
+
+######################################################################################
+
+#filtros
+RewriteRule ^([a-z]+)/([0-9]+)/([A-Z]{1}[^.]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=filtrar&vista=$1&type=$2&param1=$3&page=$4 [L]
+
+#######################################################################################
+
+#Inicio
+RewriteRule ^recomendacion/$ %{ENV:REWRITEBASE}index.php?mostrar=recomendacion [L]
+
+#########################################################################################
+
+#Cuentas
+RewriteRule ^adminEmpresas/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa [L]
+RewriteRule ^adminEmpresas/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&page=$1 [L]
+
+RewriteRule ^eliminarPlanEmpresa/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&opcion=eliminar&idPlanEmpresa=$1 [L]
+
+RewriteRule ^asignarPlanEmpresa/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&opcion=crearPlan&idSubEmpresa=$1 [L]
+
+RewriteRule ^editarPlanEmpresa/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&opcion=editarPlan&idPlanEmpresa=$1 [L]
+
+RewriteRule ^crearEmpresas/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&opcion=crearEmpresas [L]
+RewriteRule ^cuentas/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=cuentas [L]
+RewriteRule ^cuentas/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=cuentas&page=$1 [L]
+RewriteRule ^detalleEmpresa/([a-zA-Z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=subempresa&opcion=consultarInfoEmpresa&idEmpresa=$1 [L]
+
+#########################################################################################
+
+#Vacantes
+RewriteRule ^vacantes/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=vacantes [L]
+RewriteRule ^vacantes/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=vacantes&page=$1 [L]
+RewriteRule ^vacantes/([A-Za-z0-9]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=oferta&opcion=vacantes&idOferta=$1&page=$2 [L]
+########################################################################################
+
+#Aspirantes
+RewriteRule ^verAspirantes/([0-9]+)/([A-Za-z0-9]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=aspirante&vista=$1&id_oferta=$2&page=$3 [L]
+
+RewriteRule ^verAspirantes/([0-9]+)/([A-Za-z0-9]+)/([0-9]+)/([A-Z]{1}[^.]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=aspirante&opcion=filtrar&vista=$1&id_oferta=$2&type=$3&param1=$4&page=$5 [L]
+###########################################################################################################################################
+
+#generarPDF
+RewriteRule ^fileGEN/([A-Za-z]+)/([A-Za-z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=fileGEN&opcion=$1&username=$2 [L]
+
+RewriteRule ^fileGEN/([A-Za-z]+)/([A-Za-z]+)/([A-Za-z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=fileGEN&opcion=$1&tipo=$2&idFactura=$3 [L]
+
+RewriteRule ^fileGEN/([A-Za-z]+)/([A-Za-z0-9]+)/([A-Za-z0-9]+)/([A-Za-z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=fileGEN&opcion=$1&idPlan=$2&idOferta=$3&username=$4 [L]
+
+#datosPDF
+RewriteRule ^fileGEN/([A-Za-z]+)/([A-Za-z0-9]+)/([A-Za-z0-9]+)/([A-Za-z0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=fileGEN&opcion=$1&username=$2&vista=$3&id_oferta=$4 [L]
+
+#Aspirantes
+RewriteRule ^aspirante/([A-Za-z0-9]+)/([A-Za-z0-9]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=aspirante&opcion=detallePerfil&username=$1&id_oferta=$2&vista=$3 [L]
+
+#Minisitio
+RewriteRule ^filtrarEntrevistados/([A-Z]{1}[0-9_]{1,})/([0-9]+)/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=filtrar&param1=$1&type=$2&metodo=$3 [L]
+
+RewriteRule ^filtrarEntrevistados2/([A-Z]{1}[0-9_]{1,})/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=filtrar2&param1=$1&type=$2 [L]
+
+RewriteRule ^admin/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio [L]
+
+RewriteRule ^admin2/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=admin2 [L]
+
+RewriteRule ^admin/generarExcel/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=generarExcel [L]
+
+RewriteRule ^generaInforme/([0-9]+)/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=generaInforme&id_usuario=$1 [L]
+
+RewriteRule ^generaGrafico/$ %{ENV:REWRITEBASE}index.php?mostrar=minisitio&opcion=generaGrafico [L]
+
+#preguntas
+RewriteRule ^registroM/?$ %{ENV:REWRITEBASE}index.php?mostrar=regtest [L]
+
+#Registrodatostest
+RewriteRule ^registrodatostest/?$ %{ENV:REWRITEBASE}index.php?mostrar=regtest&opcion=guardardatostest [L]
+
+#inicioTest
+RewriteRule ^test/?$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionariom2 [L]
+
+#RegistroRespuestas
+RewriteRule ^registroresp/?$ %{ENV:REWRITEBASE}index.php?mostrar=cuestionariom2&opcion=guardarresp [L]
+
+#HvUsuario
+RewriteRule ^hvUsuario/([A-Za-z0-9]+)/([0-9]+)/([0-9]+)/?$ %{ENV:REWRITEBASE}index.php?mostrar=fileGEN&opcion=hvUsuario&username=$1&id_oferta=$2&vista=$3 [L]
+
+#RegistroRespuestas
+RewriteRule ^canea/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=canea [L]
+RewriteRule ^quienesSomos/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=quienesSomos [L]
+RewriteRule ^terminoscondiciones/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=terminoscondiciones [L]
+RewriteRule ^politicaprivacidad/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=politicaprivacidad [L]
+RewriteRule ^politicacookie/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=politicacookie [L]
+RewriteRule ^preguntasfrecuentes/$ %{ENV:REWRITEBASE}index.php?mostrar=inicio&opcion=preguntasfrecuentes [L]
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^micamello\.com\.ec$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.micamello\.com\.ec$
+RewriteRule ^/?$ "https\:\/\/www\.micamello\.com\.ec\/" [R=301,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php70” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php70 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
