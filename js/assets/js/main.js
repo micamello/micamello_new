@@ -363,11 +363,12 @@ function validarClave(){
 }
 
 function validarClavesRecuperar(){
-
+    
     var expreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     var err_campo = "El campo no puede ser vac\u00EDo";
     var err_formato = "Letras y n\u00FAmeros, m\u00EDnimo 8 caracteres";
-    var password = document.getElementById('password1').value;
+    /*cambiar el nombre de la variable pass1*/
+    var password = document.getElementById('pass1').value;
     var password_two = document.getElementById('password2').value;
 
     if(password == null || password.length == 0 || /^\s+$/.test(password)){
@@ -413,7 +414,7 @@ $('#btn_sesion').click(function () {
   }      
 });
 
-$("#password1").keypress(function(e) {
+$("#pass1").keypress(function(e) {
   if(e.which == 13) {
     if (!$('#btn_sesion').hasClass("disabled")){
       $('.loaderMic').css('display', 'block');
@@ -431,7 +432,7 @@ $('#recomendaciones').click(function () {
 
 $('#recuperar').click(function () {
   if (!$('#recuperar').hasClass("disabled")){
-    $('.loaderMic').css('display', 'block');
+    //$('.loaderMic').css('display', 'block');
     $('#form_contrasena').submit();    
   }      
 });
@@ -447,7 +448,7 @@ function validaForm(tipo,btn){
   }
 
   if(tipo == 2){
-    if(document.getElementById('password1')){
+    if(document.getElementById('pass1')){
       validarClavesRecuperar();
     }else{
       var correo = document.getElementById('correo1').value;

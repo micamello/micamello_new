@@ -46,7 +46,8 @@ class Controlador_Contrasena extends Controlador_Base {
         $breadcrumbs['cambioClave'] = 'Cambio de contrase&ntilde;a';
         $tags["template_js"][] = "editarPerfil";
         $tags['breadcrumbs'] = $breadcrumbs;
-        Vista::render('cambio_contrasena', $tags); 
+        Vista::render('cambio_contrasena', $tags);
+        
             
       break;   
       default:
@@ -58,6 +59,7 @@ class Controlador_Contrasena extends Controlador_Base {
     }      
   }
   public function validarToken(){
+
     $tags = array();
     try{            
       $respuesta = Utils::getParam('token', '', false);
@@ -71,7 +73,7 @@ class Controlador_Contrasena extends Controlador_Base {
       $id_usuario_login = $valores[1];
       $fecha = $valores[2];
       $token_valido = Utils::generarToken($id_usuario_login,"CONTRASENA");
-      
+
       if($token_valido != $token){
         throw new Exception("El enlace para recuperaci\u00F3n es incorrecto, por favor ingrese denuevo su correo para el env\u00EDo");      
       }
@@ -79,15 +81,15 @@ class Controlador_Contrasena extends Controlador_Base {
         throw new Exception("El enlace para recuperaci\u00F3n de contrase\u00F1a ya no es v\u00E1lida, por favor ingrese denuevo su correo para el env\u00EDo");        
       }  
       if ( Utils::getParam('confirm_form') == 1 ){        
-        $campos = array('password1'=>1,'password2'=>1);
+        $campos = array('pass1'=>1,'password2'=>1);
         $data = $this->camposRequeridos($campos);
-        if ($data["password1"] != $data["password2"]){
+        if ($data["pass1"] != $data["password2"]){
           throw new Exception("Contrase\u00F1a y confirmaci\u00F3n de contrase\u00F1a no coinciden");
         }
-        if (!Utils::valida_password($data["password1"])){
+        if (!Utils::valida_password($data["pass1"])){
           throw new Exception("Contrase\u00F1a no v\u00E1lida, debe contener m\u00EDnimo 8 caracteres, una letra may\u00FAscula y un n\u00FAmero");
         }
-        if (!Modelo_Usuario::modificarPassword($data["password1"],$id_usuario_login)){
+        if (!Modelo_Usuario::modificarPassword($data["pass1"],$id_usuario_login)){
           throw new Exception("Error al modificar la contrase\u00F1a, por favor intente denuevo"); 
         }
         $_SESSION['mostrar_exito'] = "Contrase\u00F1a modificada exitosamente"; 
@@ -97,7 +99,7 @@ class Controlador_Contrasena extends Controlador_Base {
     catch( Exception $e ){
       $_SESSION['mostrar_error'] = $e->getMessage();  
     }     
-    //$tags["vista"] = "contrasena";
+    $tags["vista"] = "contrasena";
     Vista::render('confirmar_password', $tags);     
   }
   
